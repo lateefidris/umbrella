@@ -32,6 +32,7 @@ lng = location.fetch("lng")
 pp lat
 pp lng
 
+# Weather
 pirate_weather_url = "https://api.pirateweather.net/forecast/#{pirate_weather_key}/#{lat},#{lng}"
 
 
@@ -40,9 +41,15 @@ weather_resp = HTTP.get(pirate_weather_url)
 raw_weather_resp = weather_resp.to_s
 parsed_weather_resp = JSON.parse(raw_weather_resp)
 
+# Current Weather
 currently = parsed_weather_resp.fetch("currently")
 current_temp = currently.fetch("temperature")
 
+pp current_temp
+
+# Hourly Weather
 hourly = parsed_weather_resp.fetch("hourly")
 
-pp current_temp
+hour_data = hourly.fetch("data")
+
+pp hour_data.at(0).fetch("temperature")
