@@ -5,8 +5,8 @@ gmaps_key = ENV.fetch("GMAPS_KEY")
 #First Question
 puts "Where are you located?"
 
-#user_location0 = gets.chomp
-user_location0 = "Calumet City"
+user_location0 = gets.chomp
+#user_location0 = "Calumet City"
 user_location = user_location0.gsub(" ","%20")
 
 gmaps_url = "https://maps.googleapis.com/maps/api/geocode/json?address=#{user_location}&key=#{gmaps_key}"
@@ -23,14 +23,16 @@ results = parsed_resp.fetch("results")
 first_results = results.at(0)
 
 address_components = first_results.fetch("address_components")
+formatted_address = first_results.fetch("formatted_address")
 
 geometry = first_results.fetch("geometry")
 location = geometry.fetch("location")
 lat = location.fetch("lat")
 lng = location.fetch("lng")
 
-pp lat
-pp lng
+#pp lat
+#pp lng
+pp "Checking the weather for #{formatted_address}"
 
 # Weather
 pirate_weather_url = "https://api.pirateweather.net/forecast/#{pirate_weather_key}/#{lat},#{lng}"
@@ -46,7 +48,7 @@ currently = parsed_weather_resp.fetch("currently")
 current_temp = currently.fetch("temperature")
 current_summary = currently.fetch("summary")
 
-pp current_temp
+pp "It is currently #{current_temp} degrees outside"
 pp current_summary
 
 # Hourly Weather
