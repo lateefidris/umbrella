@@ -40,4 +40,9 @@ weather_resp = HTTP.get(pirate_weather_url)
 raw_weather_resp = weather_resp.to_s
 parsed_weather_resp = JSON.parse(raw_weather_resp)
 
-pp parsed_weather_resp
+currently = parsed_weather_resp.fetch("currently")
+current_temp = currently.fetch("temperature")
+
+hourly = parsed_weather_resp.fetch("hourly")
+
+pp current_temp
