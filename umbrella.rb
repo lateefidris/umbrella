@@ -44,12 +44,31 @@ parsed_weather_resp = JSON.parse(raw_weather_resp)
 # Current Weather
 currently = parsed_weather_resp.fetch("currently")
 current_temp = currently.fetch("temperature")
+current_summary = currently.fetch("summary")
 
 pp current_temp
+pp current_summary
 
 # Hourly Weather
 hourly = parsed_weather_resp.fetch("hourly")
-
+hours_of_rain = Array.new
 hour_data = hourly.fetch("data")
+12.times do |the_index|
+   precip = hour_data.at(the_index).fetch("precipProbability") 
+   precip = precip.to_f * 100
+   precip = precip.to_i
 
-pp hour_data.at(0).fetch("temperature")
+
+   if precip > 0.1
+    pp "#{the_index} hours from now, there will be a #{precip}% chance of rain"
+    hours_of_rain.push(precip)
+   end
+  
+end
+
+if hours_of_rain.length > 0
+  pp "You might want to carry an umbrella!"
+else
+  pp "You probably won’t need an umbrella today."
+end
+# pp hour_data.at(2).fetch("temperature")
